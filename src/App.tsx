@@ -46,19 +46,17 @@ function App() {
               stopOnInteraction: false,
             }),
           ]}
-          className="max-w-3xl relative"
+          className="max-w-3xl relative rounded-md overflow-hidden"
         >
-          <CarouselContent className="">
+          <CarouselContent className="aspect-video">
             {ImgArr.map((_, index) => (
-              <CarouselItem key={index} className="h-52 pl-0">
-                <div className="h-full">
-                  <img src={test_image} alt="" className="aspect-video" />
-                </div>
+              <CarouselItem key={index} className="pl-0">
+                <img src={test_image} alt="" className="w-full object-cover" />
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
-            <CarouselBullet size={carouselLength} active={current} />
+          <div className="pb-3 absolute bottom-0 left-1/2 -translate-x-1/2">
+            <CarouselBullet size={carouselLength} activeIdx={current} />
           </div>
         </Carousel>
       </div>
