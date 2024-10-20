@@ -46,7 +46,7 @@ function App() {
               stopOnInteraction: false,
             }),
           ]}
-          className="max-w-3xl relative rounded-md overflow-hidden"
+          className="max-w-3xl relative md:rounded-md overflow-hidden"
         >
           <CarouselContent className="aspect-video">
             {ImgArr.map((_, index) => (
