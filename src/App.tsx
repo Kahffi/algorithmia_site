@@ -6,10 +6,7 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Card, CardContent } from "./components/ui/card";
 function App() {
   return (
     <div className="bg-slate-400 min-h-screen">

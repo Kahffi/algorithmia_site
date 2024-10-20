@@ -36,8 +36,8 @@ function Navbar() {
       {}
       <nav
         className={`${
-          isOpen ? "block md:hidden" : "hidden"
-        } md:block absolute md:relative top-16 left-0 w-full md:w-auto bg-slate-50 md:bg-transparent z-50 md:z-auto p-4 md:p-0`}
+          isOpen ? "block" : "hidden"
+        } md:block absolute md:relative top-16 left-0 md:top-0 w-full md:w-auto bg-slate-50 md:bg-transparent z-50 md:z-auto p-4 md:p-0`}
       >
         <ul className="flex flex-col md:flex-row md:space-x-8">
           <li>
