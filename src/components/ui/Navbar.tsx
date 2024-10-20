@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import algo_logo from "../../assets/images/algorithmia_logo.png";
 
 function Navbar() {
-
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -16,10 +15,7 @@ function Navbar() {
       </div>
       <div className="md:hidden">
         {/* hamb*/}
-        <button
-          className="text-black focus:outline-none"
-          onClick={toggleMenu}
-        >
+        <button className="text-black focus:outline-none" onClick={toggleMenu}>
           <svg
             className="w-6 h-6"
             fill="none"
@@ -40,7 +36,7 @@ function Navbar() {
       {}
       <nav
         className={`${
-          isOpen ? "block" : "hidden"
+          isOpen ? "block md:hidden" : "hidden"
         } md:block absolute md:relative top-16 left-0 w-full md:w-auto bg-slate-50 md:bg-transparent z-50 md:z-auto p-4 md:p-0`}
       >
         <ul className="flex flex-col md:flex-row md:space-x-8">
