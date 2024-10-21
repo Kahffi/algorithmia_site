@@ -12,6 +12,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
+import SignUpForm from "./components/ui/SignUpForm";
 function App() {
   const [api, setApi] = useState<CarouselApi>();
 
@@ -60,6 +61,8 @@ function App() {
           </div>
         </Carousel>
       </div>
+
+      <SignUpForm />
     </div>
   );
 }
