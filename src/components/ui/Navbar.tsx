@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";  // Menggunakan Link dari react-router-dom
+import { Link } from "react-router-dom"; // Menggunakan Link dari react-router-dom
 import algo_logo from "../../assets/images/algorithmia_logo.png";
 
 function Navbar() {
@@ -43,19 +43,33 @@ function Navbar() {
       >
         <ul className="flex flex-col md:flex-row md:space-x-8">
           <li>
-            <Link to="/" className="block py-2 md:py-0">Home</Link>
+            <Link to="/" className="block py-2 md:py-0">
+              Home
+            </Link>
           </li>
           <li>
-            <Link to="/about" className="block py-2 md:py-0">About</Link>
+            <Link to="/about" className="block py-2 md:py-0">
+              About
+            </Link>
           </li>
           <li>
-            <Link to="/services" className="block py-2 md:py-0">Services</Link>
+            <Link to="/services" className="block py-2 md:py-0">
+              Services
+            </Link>
           </li>
           <li>
-            <Link to="/contact" className="block py-2 md:py-0">Contact</Link>
+            <Link to="/contact" className="block py-2 md:py-0">
+              Contact
+            </Link>
           </li>
           <li>
-            <Link to="/signin" className="block py-2 md:py-0 text-blue-500">Sign In</Link> {/* Link ke halaman Sign In */}
+            <Link
+              to="/auth/signin"
+              className="block py-2 md:py-0 text-blue-500"
+            >
+              Sign In
+            </Link>{" "}
+            {/* Link ke halaman Sign In */}
           </li>
         </ul>
       </nav>

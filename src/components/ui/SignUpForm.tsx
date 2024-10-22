@@ -54,7 +54,7 @@ export default function SignUpForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 max-w-80 w-full"
+        className="space-y-6 max-w-80 w-full"
       >
         <FormField
           control={form.control}
