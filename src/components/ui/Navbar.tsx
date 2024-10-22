@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";  // Menggunakan Link dari react-router-dom
 import algo_logo from "../../assets/images/algorithmia_logo.png";
 
 function Navbar() {
@@ -13,8 +14,9 @@ function Navbar() {
       <div>
         <img src={algo_logo} alt="algorithmia's logo" className="w-12" />
       </div>
+
+      {/* Hamburger menu button untuk tampilan mobile */}
       <div className="md:hidden">
-        {/* hamb*/}
         <button className="text-black focus:outline-none" onClick={toggleMenu}>
           <svg
             className="w-6 h-6"
@@ -33,7 +35,7 @@ function Navbar() {
         </button>
       </div>
 
-      {}
+      {/* Navigasi */}
       <nav
         className={`${
           isOpen ? "block" : "hidden"
@@ -41,24 +43,19 @@ function Navbar() {
       >
         <ul className="flex flex-col md:flex-row md:space-x-8">
           <li>
-            <a href="#" className="block py-2 md:py-0">
-              Home
-            </a>
+            <Link to="/" className="block py-2 md:py-0">Home</Link>
           </li>
           <li>
-            <a href="#" className="block py-2 md:py-0">
-              About
-            </a>
+            <Link to="/about" className="block py-2 md:py-0">About</Link>
           </li>
           <li>
-            <a href="#" className="block py-2 md:py-0">
-              Services
-            </a>
+            <Link to="/services" className="block py-2 md:py-0">Services</Link>
           </li>
           <li>
-            <a href="#" className="block py-2 md:py-0">
-              Contact
-            </a>
+            <Link to="/contact" className="block py-2 md:py-0">Contact</Link>
+          </li>
+          <li>
+            <Link to="/signin" className="block py-2 md:py-0 text-blue-500">Sign In</Link> {/* Link ke halaman Sign In */}
           </li>
         </ul>
       </nav>
