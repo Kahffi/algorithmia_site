@@ -15,7 +15,7 @@ export default function LoginForm() {
             className="shadow appearance-none border border-gray-300 rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
             id="username"
             type="text"
-            placeholder="Long Name"
+            placeholder="Nama Lengkap"
           />
         </div>
         <div className="mb-6">
