@@ -49,18 +49,17 @@ function Navbar() {
           </li>
           <li>
             <Link to="/about" className="block py-2 md:py-0">
-              About
+              Profile
             </Link>
           </li>
           <li>
-            <Link to="/services" className="block py-2 md:py-0">
-              Services
-            </Link>
-          </li>
-          <li>
-            <Link to="/contact" className="block py-2 md:py-0">
-              Contact
-            </Link>
+            <Link
+              to="/auth/signin"
+              className="block py-2 md:py-0 text-purple-700"
+            >
+              Daftar
+            </Link>{" "}
+            {/* Link ke halaman Daftar */}
           </li>
           <li>
             <Link
