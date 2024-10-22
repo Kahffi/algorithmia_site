@@ -13,6 +13,9 @@ import {
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 
+import SignUpForm from "./components/ui/SignUpForm";
+
+
 const ImgArr = [1, 1, 1, 1, 1];
 
 function App() {
@@ -33,14 +36,12 @@ function App() {
   }, [api]);
 
   return (
-    <Router>
       <div className="bg-slate-400 min-h-screen">
         <Navbar />
-        <Routes>
+       
           {/* Carousel Route (Home Page) */}
-          <Route
-            path="/"
-            element={
+          
+            
               <div className="flex justify-center">
                 <Carousel
                   setApi={setApi}
@@ -73,12 +74,11 @@ function App() {
               </div>
             }
           />
-
-          {/* Sign In Route */}
-          <Route path="/signin" element={<SignIn />} />
-        </Routes>
       </div>
-    </Router>
+
+
+      <SignUpForm />
+    </div>
   );
 }
 
