@@ -67,7 +67,7 @@ function Navbar() {
               to="/auth/signin"
               className="block py-2 md:py-0 text-blue-500"
             >
-              Sign In
+              Masuk
             </Link>{" "}
             {/* Link ke halaman Sign In */}
           </li>
