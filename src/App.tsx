@@ -1,5 +1,4 @@
 import Navbar from "@/components/ui/Navbar";
-import test_image from "@/assets/images/test_image.jpg";
 import Autoplay from "embla-carousel-autoplay";
 import CarouselBullet from "./components/ui/CarouselBullet";
 import {
@@ -11,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import Footer from "./components/ui/Footer";
 
-const ImgArr = [1, 1, 1, 1, 1];
+const imageCount = 8;
 
 function App() {
   const [api, setApi] = useState<CarouselApi>();
@@ -52,10 +51,10 @@ function App() {
             className="max-w-3xl relative md:rounded-md overflow-hidden"
           >
             <CarouselContent className="aspect-video">
-              {ImgArr.map((_, index) => (
+              {Array.from({ length: imageCount }).map((_, index) => (
                 <CarouselItem key={index} className="pl-0">
                   <img
-                    src={test_image}
+                    src={`./Carousel/carousel_${index + 1}.jpeg`}
                     alt=""
                     className="w-full object-cover"
                   />
