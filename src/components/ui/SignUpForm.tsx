@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import axios from "axios";
+import { motion } from "framer-motion";
 
 import {
   Form,
@@ -52,7 +53,7 @@ export default function SignUpForm() {
 
   return (
     <Form {...form}>
-      <form
+      <motion.form
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-6 max-w-80 w-full"
       >
@@ -135,14 +136,14 @@ export default function SignUpForm() {
           )}
         />
         <Button
-          className="w-full"
+          className="w-full bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
           variant={"default"}
           size={"lg"}
           type="submit"
         >
           Daftar
         </Button>
-      </form>
+      </motion.form>
     </Form>
   );
 }

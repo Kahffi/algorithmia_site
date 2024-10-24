@@ -17,4 +17,12 @@ export const SignUpSchema = z
     message: "Konfirmasi kata sandi tidak sesuai",
   });
 
+export const SignInSchema = z.object({
+  username: z.string(),
+  password: z.string().min(6, {
+    message: "Password setidaknya harus 6 karakter",
+  }),
+});
+
 export type TSignUpSchema = z.infer<typeof SignUpSchema>;
+export type TSignInScheama = z.infer<typeof SignInSchema>;

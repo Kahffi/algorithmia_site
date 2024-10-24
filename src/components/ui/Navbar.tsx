@@ -8,6 +8,9 @@ function Navbar() {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
 
   return (
     <header className="bg-slate-50 p-4 flex justify-between items-center">
@@ -35,40 +38,43 @@ function Navbar() {
         </button>
       </div>
 
+      {/* ${
+          isOpen ? "block" : "hidden opacity-0"
+        } */}
+
       {/* Navigasi */}
       <nav
-        className={`${
+        className={`  ${
           isOpen ? "block" : "hidden"
         } md:block absolute md:relative top-16 left-0 md:top-0 w-full md:w-auto bg-slate-50 md:bg-transparent z-50 md:z-auto p-4 md:p-0`}
       >
         <ul className="flex flex-col md:flex-row md:space-x-8">
-          <li>
+          <li onClick={closeMenu}>
             <Link to="/" className="block py-2 md:py-0">
               Home
             </Link>
           </li>
-          <li>
+          <li onClick={closeMenu}>
             <Link to="/about" className="block py-2 md:py-0">
               Profile
             </Link>
           </li>
-          <li>
+          <li onClick={closeMenu}>
             <Link
-              to="/auth/signin"
+              to="/auth/signup"
               className="block py-2 md:py-0 text-purple-700"
             >
               Daftar
             </Link>{" "}
             {/* Link ke halaman Daftar */}
           </li>
-          <li>
+          <li onClick={closeMenu}>
             <Link
               to="/auth/signin"
               className="block py-2 md:py-0 text-blue-500"
             >
               Masuk
             </Link>{" "}
-            {/* Link ke halaman Sign In */}
           </li>
         </ul>
       </nav>

@@ -9,6 +9,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
+import Footer from "./components/ui/Footer";
 
 const ImgArr = [1, 1, 1, 1, 1];
 
@@ -30,37 +31,44 @@ function App() {
   }, [api]);
 
   return (
-    <div className="bg-slate-400 min-h-screen">
+    <div className="flex flex-col bg-slate-100 min-h-screen">
       <Navbar />
 
-      {/* Carousel Route (Home Page) */}
+      <main className="flex-1">
+        {/* Carousel Route (Home Page) */}
 
-      <div className="flex justify-center">
-        <Carousel
-          setApi={setApi}
-          opts={{
-            align: "end",
-          }}
-          plugins={[
-            Autoplay({
-              delay: 2500,
-              stopOnInteraction: false,
-            }),
-          ]}
-          className="max-w-3xl relative md:rounded-md overflow-hidden"
-        >
-          <CarouselContent className="aspect-video">
-            {ImgArr.map((_, index) => (
-              <CarouselItem key={index} className="pl-0">
-                <img src={test_image} alt="" className="w-full object-cover" />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <div className="pb-3 absolute bottom-0 left-1/2 -translate-x-1/2">
-            <CarouselBullet size={carouselLength} activeIdx={current} />
-          </div>
-        </Carousel>
-      </div>
+        <div className="flex justify-center">
+          <Carousel
+            setApi={setApi}
+            opts={{
+              align: "end",
+            }}
+            plugins={[
+              Autoplay({
+                delay: 2500,
+                stopOnInteraction: false,
+              }),
+            ]}
+            className="max-w-3xl relative md:rounded-md overflow-hidden"
+          >
+            <CarouselContent className="aspect-video">
+              {ImgArr.map((_, index) => (
+                <CarouselItem key={index} className="pl-0">
+                  <img
+                    src={test_image}
+                    alt=""
+                    className="w-full object-cover"
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="pb-3 absolute bottom-0 left-1/2 -translate-x-1/2">
+              <CarouselBullet size={carouselLength} activeIdx={current} />
+            </div>
+          </Carousel>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 }
