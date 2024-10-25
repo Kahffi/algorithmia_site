@@ -7,7 +7,6 @@ import AuthPage from "./pages/AuthPage.tsx";
 import Profile from "./pages/Profile.tsx";
 import { UserContextProvider } from "./context/UserContext.tsx";
 import HomePage from "./pages/HomePage.tsx";
-import LeaderBoard from "./components/ui/LeaderBoard.tsx";
 
 const router = createBrowserRouter([
   {
@@ -30,9 +29,9 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <LeaderBoard />
-    {/* <UserContextProvider>
+    {/* <LeaderBoard /> */}
+    <UserContextProvider>
       <RouterProvider router={router} />
-    </UserContextProvider> */}
+    </UserContextProvider>
   </StrictMode>
 );

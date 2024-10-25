@@ -39,7 +39,7 @@ export default function LeaderBoard() {
 
   const chartConfig = useMemo(() => {
     if (!sortedData) return;
-    const chartConfig = {
+    const chartConfig: Record<string, { label: string }> = {
       points: {
         label: "Poin",
       },
