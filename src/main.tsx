@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import AuthPage from "./pages/AuthPage.tsx";
-import Profile from "./pages/Profile.tsx"
+import Profile from "./pages/Profile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,8 +17,8 @@ const router = createBrowserRouter([
   },
   {
     path: "about",
-    element: <Profile />
-  }
+    element: <Profile />,
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(

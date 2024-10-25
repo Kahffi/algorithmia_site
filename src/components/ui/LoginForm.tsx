@@ -1,40 +1,114 @@
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; // Untuk animasi
+import { useForm } from "react-hook-form";
+import { SignInSchema, TSignInScheama } from "../../../Schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-export default function LoginForm() {
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { redirect } from "react-router-dom";
+
+function LoginForm() {
+  const form = useForm<TSignInScheama>({
+    resolver: zodResolver(SignInSchema),
+    defaultValues: {
+      password: "",
+      username: "",
+    },
+  });
+
+  async function onSubmit(values: TSignInScheama) {
+    try {
+      const res = await fetch("https://algoritmia.vercel.app/user/login", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(values),
+        mode: "cors",
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message);
+      }
+      const data = await res.json();
+
+      if (data.status === 200) {
+        alert("login success");
+      }
+      console.log(data.message);
+      if (data.status === 400) throw new Error("400");
+    } catch (e) {
+      if (!(e instanceof Error)) {
+        console.error(e);
+      }
+      if ((e as Error).message.includes("400")) {
+        form.setError("username", {
+          message: "Nama Pengguna atau Kata Sandi salah, silahkan coba lagi",
+        });
+        form.setError("password", {
+          message: "Nama Pengguna atau Kata Sandi salah, silahkan coba lagi",
+        });
+      }
+    }
+  }
+
   return (
-    <div className="">
-      {/* Form */}
+    <Form {...form}>
       <motion.form
-        className="w-full max-w-sm"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-6 max-w-80 w-full"
       >
-        <div className="mb-4">
-          <input
-            className="shadow appearance-none border border-gray-300 rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-            id="username"
-            type="text"
-            placeholder="Nama Lengkap"
-          />
-        </div>
-        <div className="mb-6">
-          <input
-            className="shadow appearance-none border border-gray-300 rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-            id="password"
-            type="password"
-            placeholder="Password"
-          />
-        </div>
-        <div className="flex items-center justify-center">
-          <button
-            className="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
-            type="button"
-          >
-            Sign In
-          </button>
-        </div>
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nama Pengguna</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Masukkan nama pengguna" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Kata Sandi</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Masukkan kata sandi"
+                  type="password"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button
+          className="w-full bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+          variant={"default"}
+          size={"lg"}
+          type="submit"
+        >
+          Daftar
+        </Button>
       </motion.form>
-    </div>
+    </Form>
   );
 }
+
+export default LoginForm;
