@@ -4,8 +4,6 @@ import { SignUpSchema } from "../../../Schema";
 import type { TSignUpSchema } from "../../../Schema";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-import axios from "axios";
 import { motion } from "framer-motion";
 
 import {
@@ -16,6 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { redirect } from "react-router-dom";
 
 export default function SignUpForm() {
   const form = useForm<TSignUpSchema>({
@@ -31,23 +30,35 @@ export default function SignUpForm() {
 
   async function onSubmit(values: TSignUpSchema) {
     try {
-      const res = await axios.post(
-        "https://algoritmia.vercel.app/user/signup",
-        JSON.stringify(values)
-      );
-      if (res.status !== 200) throw new Error("ba");
-    } catch (e) {
-      console.log("error lololo");
+      const res = await fetch("https://algoritmia.vercel.app/user/signup", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(values),
+        mode: "cors",
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message);
+      }
+      const data = await res.json();
 
-      console.error(e);
-      // wait until BackEnd gave proper error status
-      // form.setError("fullName", { message: "Nama lengkap anda tidak valid" });
-      // form.setError("username", {
-      //   message: "Nama pengguna ini sudah digunakan",
-      // });
-      // form.setError("whatsapp", {
-      //   message: "Nomor Whatsapp yang anda masukkan tidak valid",
-      // });
+      if (data.status === 200) {
+        console.log("halo");
+        redirect("/");
+      }
+      if (data.status === 400) throw new Error("400");
+    } catch (e) {
+      if (!(e instanceof Error)) {
+        console.error(e);
+      }
+      if ((e as Error).message.includes("400")) {
+        form.setError("username", {
+          message:
+            "Nama pengguna ini sudah digunakan, silahkan coba nama pengguna lain",
+        });
+      }
     }
   }
 
