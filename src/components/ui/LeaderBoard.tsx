@@ -54,7 +54,6 @@ export default function LeaderBoard() {
     <>
       {sortedData && (
         <>
-          <h1>Loaded</h1>
           <ChartContainer config={chartConfig!}>
             <BarChart
               accessibilityLayer
