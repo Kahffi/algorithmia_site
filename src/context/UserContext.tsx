@@ -18,6 +18,7 @@ type TUserReducerAction = {
 const userReducer = (state: TUser, action: TUserReducerAction) => {
   switch (action.type) {
     case "LOGIN":
+      console.log(state);
       return { ...(action.payload as TUser) };
   }
 };

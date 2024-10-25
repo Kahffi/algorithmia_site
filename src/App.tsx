@@ -19,6 +19,7 @@ function App() {
   const [carouselLength, setCarouselLength] = useState(0);
   const { state, dispatch } = useContext(UserContext)!;
 
+  console.log(state, dispatch);
   useEffect(() => {
     if (!api) {
       return;
