@@ -7,8 +7,9 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Footer from "./components/ui/Footer";
+import { UserContext } from "./context/UserContext";
 
 const imageCount = 8;
 
@@ -16,6 +17,7 @@ function App() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [carouselLength, setCarouselLength] = useState(0);
+  const { state, dispatch } = useContext(UserContext)!;
 
   useEffect(() => {
     if (!api) {

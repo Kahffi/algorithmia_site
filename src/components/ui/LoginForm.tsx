@@ -13,9 +13,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "@/context/UserContext";
 
 function LoginForm() {
+  const navigate = useNavigate();
+  const { dispatch } = useContext(UserContext)!;
+
   const form = useForm<TSignInScheama>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -41,9 +46,9 @@ function LoginForm() {
       const data = await res.json();
 
       if (data.status === 200) {
-        alert("login success");
+        dispatch({ type: "LOGIN", payload: data.user });
+        navigate("/home");
       }
-      console.log(data.message);
       if (data.status === 400) throw new Error("400");
     } catch (e) {
       if (!(e instanceof Error)) {

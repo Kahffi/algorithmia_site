@@ -5,11 +5,18 @@ import App from "./App.tsx";
 import "./index.css";
 import AuthPage from "./pages/AuthPage.tsx";
 import Profile from "./pages/Profile.tsx";
+import { UserContextProvider } from "./context/UserContext.tsx";
+import HomePage from "./pages/HomePage.tsx";
+import LeaderBoard from "./components/ui/LeaderBoard.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/home",
+    element: <HomePage />,
   },
   {
     path: "auth/:authType",
@@ -23,6 +30,9 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <LeaderBoard />
+    {/* <UserContextProvider>
+      <RouterProvider router={router} />
+    </UserContextProvider> */}
   </StrictMode>
 );
