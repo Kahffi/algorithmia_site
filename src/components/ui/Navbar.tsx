@@ -19,16 +19,16 @@ function Navbar() {
   };
 
   return (
-    <header className=" p-4 flex justify-between items-center shadow-md">
+    <header className=" p-2 flex justify-between items-center shadow-md">
       <div>
-        <img src={algo_logo} alt="algorithmia's logo" className="w-12" />
+        <img src={algo_logo} alt="algorithmia's logo" className="w-10" />
       </div>
 
       {/* Hamburger menu button untuk tampilan mobile */}
       <div className="md:hidden">
         <button className="text-black focus:outline-none" onClick={toggleMenu}>
           <svg
-            className="w-6 h-6"
+            className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -52,10 +52,10 @@ function Navbar() {
       <nav
         className={`  ${
           isOpen ? "block" : "hidden"
-        } md:block absolute md:relative top-16 left-0 md:top-0 w-full md:w-auto bg-slate-50 md:bg-transparent z-50 md:z-auto p-4 md:p-0`}
+        } md:block absolute md:relative top-14 left-0 md:top-0 w-full md:w-auto bg-slate-50 md:bg-transparent z-50 md:z-auto p-4 md:p-0`}
       >
         <ul className="flex flex-col md:flex-row md:space-x-8">
-          {state?._id !== "" ? (
+          {state ? (
             <>
               <li onClick={closeMenu}>
                 <Link to="/" className="block py-2 md:py-0">

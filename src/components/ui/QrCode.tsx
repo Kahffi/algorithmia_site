@@ -59,7 +59,9 @@ export default function QrCode({
   return (
     <div>
       {cameraId !== "" ? (
-        <div id="reader" />
+        <div id="reader">
+          <h1 className="z-50">HALO WOI</h1>
+        </div>
       ) : (
         <p>Izinkan kamera untuk menggunakan fitur ini</p>
       )}

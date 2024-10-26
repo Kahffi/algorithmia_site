@@ -1,11 +1,20 @@
 import LoginForm from "@/components/ui/LoginForm";
 import Navbar from "@/components/ui/Navbar";
 import SignUpForm from "@/components/ui/SignUpForm";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/ui/Footer";
 import algorithmia_logo from "@/assets/images/algorithmia_logo.png";
+import { useContext, useEffect } from "react";
+import { UserContext } from "@/context/UserContext";
 export default function AuthPage() {
   const { authType } = useParams();
+  const { state: userState } = useContext(UserContext)!;
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userState) {
+      navigate("/home");
+    }
+  }, [userState]);
 
   return (
     <div className="flex flex-col min-h-svh bg-white gap-5">
