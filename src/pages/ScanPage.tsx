@@ -138,15 +138,19 @@ export default function ScanPage() {
                 </>
               ) : submitStatus === 400 ? (
                 <>
-                  <LucideXOctagon className="inline mr-2" color="red" />
-                  You Have Scanned this QR Code Before
+                  You have earned points from this booth. Please visit and scan
+                  the QR codes at booths you haven't visited yet to earn
+                  additional points.
                 </>
               ) : (
-                "Unknown Error Occured"
+                "Unknown Error Occured. Please try again later"
               )}
             </CardContent>
             <CardFooter className="w-full">
-              <Button className="w-full" onClick={() => navigate("/home")}>
+              <Button
+                className="w-full bg-blue-500 hover:bg-blue-600"
+                onClick={() => navigate("/home")}
+              >
                 Back to Home Page
               </Button>
             </CardFooter>

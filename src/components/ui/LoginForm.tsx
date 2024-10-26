@@ -33,6 +33,7 @@ function LoginForm() {
 
   async function onSubmit(values: TSignInScheama) {
     try {
+      console.log(values);
       setIsPending(true);
       const res = await fetch("https://algoritmia.vercel.app/user/login", {
         headers: {
@@ -53,6 +54,7 @@ function LoginForm() {
         localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/home");
       }
+      console.log(data);
       if (data.status === 400) throw new Error("400");
     } catch (e) {
       if (!(e instanceof Error)) {
@@ -60,10 +62,10 @@ function LoginForm() {
       }
       if ((e as Error).message.includes("400")) {
         form.setError("username", {
-          message: "Nama Pengguna atau Kata Sandi salah, silahkan coba lagi",
+          message: "Username or password wrong, please try again",
         });
         form.setError("password", {
-          message: "Nama Pengguna atau Kata Sandi salah, silahkan coba lagi",
+          message: "Username or password wrong, please try again",
         });
       }
     } finally {

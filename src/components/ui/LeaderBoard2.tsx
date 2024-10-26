@@ -14,6 +14,11 @@ type Props = {
   data: TUser[];
 };
 
+function generateColor(num: number): string {
+  const lightness = 35 + num * 15;
+  return `hsl(272 100% ${lightness}%)`;
+}
+
 export default function LeaderBoard2({ data }: Props) {
   return (
     <>
@@ -29,7 +34,8 @@ export default function LeaderBoard2({ data }: Props) {
                   <motion.div
                     initial={{ x: -20 }}
                     animate={{ x: 0 }}
-                    className="py-1 px-3 sm:p-3 sm:px-5  rounded-md bg-green-100"
+                    style={{ backgroundColor: generateColor(idx) }}
+                    className="text-white font-semibold py-2 px-3 sm:p-3 sm:px-5  rounded-md bg-green-100"
                   >
                     <p>{idx + 1}</p>
                   </motion.div>
@@ -37,9 +43,13 @@ export default function LeaderBoard2({ data }: Props) {
                     initial={{ width: 0, opacity: 0 }}
                     animate={{ width: "100%", opacity: 1 }}
                     transition={{ ease: "easeInOut", duration: 0.75 }}
-                    className="w-full bg-green-400 p-1 sm:p-3 rounded-md"
+                    style={{ backgroundColor: generateColor(idx) }}
+                    className="text-white font-semibold w-full bg-green-400 px-3 py-2 sm:p-3 rounded-md"
                   >
-                    {usrData.username}
+                    <div className="flex justify-between items-center">
+                      <p>{usrData.username}</p>
+                      <p className="text-sm font-medium">{usrData.poin}</p>
+                    </div>
                   </motion.div>
                 </div>
               );
@@ -51,7 +61,7 @@ export default function LeaderBoard2({ data }: Props) {
           )}
         </CardContent>
         <CardFooter className="-mb-6 -mt-1 text-sm text-gray-700">
-          <p>Top 3 of the Leaderboard</p>
+          <p>Top 3 users with the most points</p>
         </CardFooter>
       </Card>
     </>

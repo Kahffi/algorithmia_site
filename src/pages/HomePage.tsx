@@ -100,22 +100,22 @@ export default function HomePage() {
 
         {/* Button Group */}
         <div className="flex flex-col w-[280px] gap-3">
-          <Button className="w-full bg-blue-500 hover:bg-blue-400 font-semibold">
-            <Link to="/qr-scanner" className="flex items-center gap-1">
+          <Link to="/qr-scanner" className="w-full ">
+            <Button className="flex bg-blue-500 hover:bg-blue-400 items-center gap-1 w-full font-semibold">
               <LucideScanQrCode strokeWidth={2} />
-              Scan QR Code
-            </Link>
-          </Button>
-          <Button className="w-full bg-pink-500 hover:bg-pink-400 font-semibold">
-            <a
-              href="https://gallery-digital-algorithmia.vercel.app/"
-              target="_blank"
-              className="flex items-center gap-1"
-            >
+              QR Code Scanner
+            </Button>
+          </Link>
+          <a
+            href="https://gallery-digital-algorithmia.vercel.app/"
+            target="_blank"
+            className="flex items-center gap-1"
+          >
+            <Button className="w-full bg-pink-500 hover:bg-pink-400 font-semibold">
               <LucideImage />
-              Galeri Digital
-            </a>
-          </Button>
+              Digital Gallery
+            </Button>
+          </a>
         </div>
       </main>
       <Footer />
