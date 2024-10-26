@@ -60,7 +60,7 @@ export default function SignUpForm() {
       if ((e as Error).message.includes("400")) {
         form.setError("username", {
           message:
-            "Nama pengguna ini sudah digunakan, silahkan coba nama pengguna lain",
+            "This username is not available, please choose another username",
         });
       }
     } finally {
@@ -79,9 +79,9 @@ export default function SignUpForm() {
           name="fullName"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Nama Lengkap</FormLabel>
+              <FormLabel>Full Name</FormLabel>
               <FormControl>
-                <Input placeholder="Nama Lengkap" {...field} />
+                <Input placeholder="Full Name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -93,9 +93,9 @@ export default function SignUpForm() {
           name="username"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Nama Pengguna</FormLabel>
+              <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Masukkan nama pengguna" />
+                <Input {...field} placeholder="Username" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -107,13 +107,9 @@ export default function SignUpForm() {
           name="password"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Kata Sandi</FormLabel>
+              <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
-                  {...field}
-                  placeholder="Masukkan kata sandi"
-                  type="password"
-                />
+                <Input {...field} placeholder="Password" type="password" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -124,11 +120,11 @@ export default function SignUpForm() {
           name="passwordVerif"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Konfirmasi Kata Sandi</FormLabel>
+              <FormLabel>Confirm Password</FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  placeholder="Konfirmasi kata sandi"
+                  placeholder="Confirm your password"
                   type="password"
                 />
               </FormControl>
@@ -141,13 +137,9 @@ export default function SignUpForm() {
           name="whatsapp"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Nomor Whatsapp</FormLabel>
+              <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input
-                  {...field}
-                  placeholder="Masukkan nomor whatsapp"
-                  type="text"
-                />
+                <Input {...field} placeholder="Phone Number" type="text" />
               </FormControl>
             </FormItem>
           )}
@@ -156,12 +148,12 @@ export default function SignUpForm() {
           <OrbitProgress size="small" color={"#cc31b1"} />
         ) : (
           <Button
-            className="w-full bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+            className="w-full text-lg bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
             variant={"default"}
             size={"lg"}
             type="submit"
           >
-            Daftar
+            Sign Up
           </Button>
         )}
       </motion.form>

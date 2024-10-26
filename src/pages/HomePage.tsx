@@ -5,18 +5,21 @@ import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/ui/Footer";
 import LeaderBoard2 from "@/components/ui/LeaderBoard2";
 import { Button } from "@/components/ui/button";
+import { LucideImage, LucideScanQrCode, LucideUserCircle2 } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { OrbitProgress } from "react-loading-indicators";
 
 export default function HomePage() {
-  const { state } = useContext(UserContext)!;
+  const { state: userData } = useContext(UserContext)!;
   const navigate = useNavigate();
 
-  const [usersData, setUsersData] = useState<TUser[]>([]);
+  const [usersArray, setUsersArray] = useState<TUser[]>([]);
   // unauthenticated user will be redirected
   useEffect(() => {
-    if (!state) {
+    if (!userData) {
       navigate("/auth/signin");
     }
-  }, [state]);
+  }, [userData]);
 
   useEffect(() => {
     async function fetchAllUser(url: string) {
@@ -30,7 +33,7 @@ export default function HomePage() {
 
         if (!res.ok) throw new Error(res.status + "");
         const data = await res.json();
-        if (data.status === 200) setUsersData(data.user);
+        if (data.status === 200) setUsersArray(data.user);
       } catch (e) {
         console.error(e);
       }
@@ -39,20 +42,79 @@ export default function HomePage() {
   }, []);
 
   const sortedData = useMemo(() => {
-    if (!usersData) return;
-    return usersData.sort((a, b) => b.poin - a.poin).slice(0, 3);
-  }, [usersData]);
+    if (!usersArray) return;
+    return usersArray.sort((a, b) => b.poin - a.poin);
+  }, [usersArray]);
 
+  const userRank = useMemo(() => {
+    if (!(sortedData && userData)) return;
+    let foundIndex;
+    sortedData.forEach((user, idx) => {
+      if (user._id === userData._id) foundIndex = idx + 1;
+    });
+    return foundIndex;
+  }, [sortedData, userData]);
   return (
-    <div className="flex flex-col min-h-svh">
+    <div className="flex flex-col min-h-svh bg-slate-100">
       <Navbar />
-      <main className="flex-1 flex flex-col items-center p-3">
-        <div className="flex justify-center w-full">
-          {sortedData && <LeaderBoard2 data={sortedData} />}
+      <main className="flex-1 flex flex-col items-center p-3 py-8 gap-5">
+        <div>
+          <LucideUserCircle2 size={120} strokeWidth={0.7} />
+          <div className="flex flex-col items-center">
+            <h2 className="text-2xl font-bold">{userData.username}</h2>
+            <h3 className="text-xl font-medium">{userData.fullName}</h3>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <Button>
-            <Link to="/qr-scanner">Scan Barcode</Link>
+        {/* Leader Board */}
+        <div className="flex justify-center w-full">
+          {sortedData && <LeaderBoard2 data={sortedData.slice(0, 3)} />}
+        </div>
+        {/* Status */}
+        <div className="flex w-[320px] gap-7 justify-center">
+          {/* Poins */}
+          <Card className="border-4 border-pink-400 min-w-[130px]">
+            <CardHeader className="-mb-3 -mt-4">
+              <CardTitle className="-ml-3 text-lg font-medium">Poins</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-blue-500 text-2xl text-center font-semibold">
+                {userData.poin}
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="border-4 border-pink-400 min-w-[130px]">
+            <CardHeader className="-mb-3 -mt-4">
+              <CardTitle className="-ml-3 text-lg font-medium">Rank</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-blue-500 text-2xl text-center font-semibold">
+                {userRank ? (
+                  userRank
+                ) : (
+                  <OrbitProgress size="small" color={"#cc31b1"} />
+                )}
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Button Group */}
+        <div className="flex flex-col w-[280px] gap-3">
+          <Button className="w-full bg-blue-500 hover:bg-blue-400 font-semibold">
+            <Link to="/qr-scanner" className="flex items-center gap-1">
+              <LucideScanQrCode strokeWidth={2} />
+              Scan QR Code
+            </Link>
+          </Button>
+          <Button className="w-full bg-pink-500 hover:bg-pink-400 font-semibold">
+            <a
+              href="https://gallery-digital-algorithmia.vercel.app/"
+              target="_blank"
+              className="flex items-center gap-1"
+            >
+              <LucideImage />
+              Galeri Digital
+            </a>
           </Button>
         </div>
       </main>

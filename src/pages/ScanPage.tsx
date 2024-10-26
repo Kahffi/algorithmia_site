@@ -7,14 +7,59 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import QrCode from "@/components/ui/QrCode";
+import { UserContext } from "@/context/UserContext";
 import { QrcodeErrorCallback, QrcodeSuccessCallback } from "html5-qrcode";
-import { LucideCheck, LucideScanQrCode, LucideX } from "lucide-react";
-import { useCallback, useState } from "react";
+import {
+  LucideCheck,
+  LucideScanQrCode,
+  LucideX,
+  LucideXOctagon,
+} from "lucide-react";
+import { useCallback, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function ScanPage() {
-  const [success, setSuccess] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<number | null>(null);
   const navigate = useNavigate();
+  const { state, dispatch } = useContext(UserContext)!;
+
+  async function handleQRSubmit(url: string) {
+    try {
+      // setIsPending(true);
+      const res = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({ userId: state._id }),
+        mode: "cors",
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message);
+      }
+      const data = await res.json();
+      alert(data.message);
+
+      if (data.status === 200) dispatch({ type: "ADD_POINT" });
+      setSubmitStatus(data.status);
+    } catch (e) {
+      if (!(e instanceof Error)) {
+        console.error(e);
+      }
+      console.error(e);
+      // if ((e as Error).message.includes("400")) {
+      //   form.setError("username", {
+      //     message: "Nama Pengguna atau Kata Sandi salah, silahkan coba lagi",
+      //   });
+      //   form.setError("password", {
+      //     message: "Nama Pengguna atau Kata Sandi salah, silahkan coba lagi",
+      //   });
+      // }
+    } finally {
+      // setIsPending(false);
+    }
+  }
 
   const qrErrorCallback: QrcodeErrorCallback = useCallback((errMsg, err) => {
     console.error(errMsg);
@@ -25,7 +70,7 @@ export default function ScanPage() {
     (decodedText, result) => {
       alert(decodedText);
       console.log(result);
-      setSuccess(true);
+      handleQRSubmit(decodedText);
     },
     []
   );
@@ -41,43 +86,68 @@ export default function ScanPage() {
             <span>
               <LucideScanQrCode className="inline mr-2" size={30} />
             </span>
-            Scan QR Code
+            QR Code Scanner
           </h1>
 
           <p className="text-sm">
-            Scan QR Code yang terdapat di berbagai stand yang tersedia, kamu
-            hanya dapat melakukan 1 kali scan untuk masing-masing stand
+            Scan the QR Code located at the various booths available <br />
+            You can only scan once for each booth.
           </p>
         </div>
-        <QrCode
-          config={{
-            fps: 25,
-            qrbox: { width: 200, height: 200 },
-            disableFlip: true,
-          }}
-          errorCallback={qrErrorCallback}
-          successCallback={qrSuccessCallback}
-          // cameraId={cameraId}
-        />
+        <div className="w-full">
+          <QrCode
+            config={{
+              fps: 25,
+              qrbox: { width: 280, height: 280 },
+              disableFlip: true,
+            }}
+            errorCallback={qrErrorCallback}
+            successCallback={qrSuccessCallback}
+            // cameraId={cameraId}
+          />
+        </div>
       </div>
 
-      {success && (
-        <div className="w-full h-full absolute top-0 flex justify-center items-center bg-pink-100/50 backdrop-blur-sm px-3">
+      {/* overlay */}
+      {submitStatus && (
+        <div className="w-full h-full absolute top-0 flex justify-center items-center bg-pink-100/50 backdrop-blur-sm px-3 pb-10">
           <Card className="max-w-[320px] flex flex-col items-center">
             <CardHeader>
               <CardTitle className="text-lg text-center font-medium">
-                Poin Berhasil Ditambahkan{" "}
-                <LucideCheck className="inline" color="green" />
+                {submitStatus === 200 ? (
+                  <>
+                    <LucideCheck className="inline mr-2" color="green" />
+                    Points Has Been Successfully Added
+                  </>
+                ) : submitStatus === 400 ? (
+                  <>
+                    <LucideXOctagon className="inline mr-2" color="red" />
+                    You Have Scanned this QR Code Before
+                  </>
+                ) : (
+                  "Unknown Error Occured"
+                )}
               </CardTitle>
             </CardHeader>
             <CardContent className="text-sm text-center">
-              10 Poin telah ditambahkan ke akunmu.
-              <br />
-              Kumpulkan poin sebanyak-banyaknya dan menangkan hadiah menarik!
+              {submitStatus === 200 ? (
+                <>
+                  10 points have been added to your account.
+                  <br />
+                  Collect as many points as possible and win exciting prizes!
+                </>
+              ) : submitStatus === 400 ? (
+                <>
+                  <LucideXOctagon className="inline mr-2" color="red" />
+                  You Have Scanned this QR Code Before
+                </>
+              ) : (
+                "Unknown Error Occured"
+              )}
             </CardContent>
             <CardFooter className="w-full">
               <Button className="w-full" onClick={() => navigate("/home")}>
-                Kembali ke Beranda
+                Back to Home Page
               </Button>
             </CardFooter>
           </Card>

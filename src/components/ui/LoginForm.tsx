@@ -82,9 +82,9 @@ function LoginForm() {
           name="username"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Nama Pengguna</FormLabel>
+              <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Masukkan nama pengguna" />
+                <Input {...field} placeholder="Username" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -96,13 +96,9 @@ function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Kata Sandi</FormLabel>
+              <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
-                  {...field}
-                  placeholder="Masukkan kata sandi"
-                  type="password"
-                />
+                <Input {...field} placeholder="Password" type="password" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -111,12 +107,12 @@ function LoginForm() {
 
         {!isPending ? (
           <Button
-            className="w-full bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+            className="w-full bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline text-lg"
             variant={"default"}
             size={"lg"}
             type="submit"
           >
-            Masuk
+            Login
           </Button>
         ) : (
           <OrbitProgress size="small" color={"#cc31b1"} />

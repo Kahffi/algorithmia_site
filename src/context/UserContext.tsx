@@ -20,7 +20,7 @@ export type TUser =
 
 type TUserReducerAction = {
   payload?: unknown;
-  type: "LOGIN" | "LOGOUT";
+  type: "LOGIN" | "LOGOUT" | "ADD_POINT";
 };
 
 const userReducer = (state: TUser, action: TUserReducerAction) => {
@@ -32,6 +32,8 @@ const userReducer = (state: TUser, action: TUserReducerAction) => {
     case "LOGOUT":
       localStorage.removeItem("user");
       return null;
+    case "ADD_POINT":
+      return { ...state, poin: state.poin + 10 };
     default:
       return { ...state };
   }

@@ -22,7 +22,7 @@ export default function AuthPage() {
       <main className="flex-1 flex flex-col items-center gap-1">
         <img src={algorithmia_logo} className="mb-5" alt="algorithmia's logo" />
         <h1 className="text-3xl font-bold mb-6 text-gray-800">
-          {authType === "signup" ? "Daftar Akun" : "Masuk"}
+          {authType === "signup" ? "Create Account" : "Sign In"}
         </h1>
         {authType === "signup" ? (
           <SignUpForm />
