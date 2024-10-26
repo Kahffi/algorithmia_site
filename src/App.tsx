@@ -22,7 +22,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (state?._id !== "") navigate("/home");
+    if (state) navigate("/home");
   }, [state, navigate]);
 
   console.log(state, dispatch);

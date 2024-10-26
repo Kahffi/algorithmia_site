@@ -50,6 +50,7 @@ function LoginForm() {
 
       if (data.status === 200) {
         dispatch({ type: "LOGIN", payload: data.user });
+        localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/home");
       }
       if (data.status === 400) throw new Error("400");

@@ -1,6 +1,7 @@
 import { TUser } from "@/context/UserContext";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 type Props = {
   data: TUser[];
@@ -17,12 +18,21 @@ export default function LeaderBoard2({ data }: Props) {
           {data.map((usrData, idx) => {
             return (
               <div key={usrData._id} className="flex gap-2">
-                <div className="py-1 px-3 sm:p-3 sm:px-5  rounded-md bg-green-100">
+                <motion.div
+                  initial={{ x: -20 }}
+                  animate={{ x: 0 }}
+                  className="py-1 px-3 sm:p-3 sm:px-5  rounded-md bg-green-100"
+                >
                   <p>{idx + 1}</p>
-                </div>
-                <div className="w-full bg-green-400 p-1 sm:p-3 rounded-md">
+                </motion.div>
+                <motion.div
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: "100%", opacity: 1 }}
+                  transition={{ ease: "easeInOut", duration: 0.75 }}
+                  className="w-full bg-green-400 p-1 sm:p-3 rounded-md"
+                >
                   {usrData.username}
-                </div>
+                </motion.div>
               </div>
             );
           })}

@@ -13,10 +13,10 @@ export default function HomePage() {
   const [usersData, setUsersData] = useState<TUser[]>([]);
   // unauthenticated user will be redirected
   useEffect(() => {
-    if (state?._id === "") {
-      navigate("auth/signin");
+    if (!state) {
+      navigate("/auth/signin");
     }
-  }, [navigate, state]);
+  }, [state]);
 
   useEffect(() => {
     async function fetchAllUser(url: string) {
