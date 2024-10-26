@@ -10,6 +10,7 @@ import {
 import { useContext, useEffect, useState } from "react";
 import Footer from "./components/ui/Footer";
 import { UserContext } from "./context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const imageCount = 8;
 
@@ -18,6 +19,11 @@ function App() {
   const [current, setCurrent] = useState(0);
   const [carouselLength, setCarouselLength] = useState(0);
   const { state, dispatch } = useContext(UserContext)!;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (state?._id !== "") navigate("/home");
+  }, [state, navigate]);
 
   console.log(state, dispatch);
   useEffect(() => {

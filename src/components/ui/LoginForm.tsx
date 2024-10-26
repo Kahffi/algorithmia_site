@@ -4,6 +4,7 @@ import { SignInSchema, TSignInScheama } from "../../../Schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { OrbitProgress } from "react-loading-indicators";
 
 import {
   Form,
@@ -14,12 +15,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "@/context/UserContext";
 
 function LoginForm() {
   const navigate = useNavigate();
   const { dispatch } = useContext(UserContext)!;
+  const [isPending, setIsPending] = useState(false);
 
   const form = useForm<TSignInScheama>({
     resolver: zodResolver(SignInSchema),
@@ -31,6 +33,7 @@ function LoginForm() {
 
   async function onSubmit(values: TSignInScheama) {
     try {
+      setIsPending(true);
       const res = await fetch("https://algoritmia.vercel.app/user/login", {
         headers: {
           "Content-Type": "application/json",
@@ -62,6 +65,8 @@ function LoginForm() {
           message: "Nama Pengguna atau Kata Sandi salah, silahkan coba lagi",
         });
       }
+    } finally {
+      setIsPending(false);
     }
   }
 
@@ -69,13 +74,13 @@ function LoginForm() {
     <Form {...form}>
       <motion.form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 max-w-80 w-full"
+        className="flex flex-col items-center space-y-6 max-w-80 w-full"
       >
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>Nama Pengguna</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="Masukkan nama pengguna" />
@@ -89,7 +94,7 @@ function LoginForm() {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>Kata Sandi</FormLabel>
               <FormControl>
                 <Input
@@ -103,14 +108,18 @@ function LoginForm() {
           )}
         />
 
-        <Button
-          className="w-full bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
-          variant={"default"}
-          size={"lg"}
-          type="submit"
-        >
-          Daftar
-        </Button>
+        {!isPending ? (
+          <Button
+            className="w-full bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+          >
+            Masuk
+          </Button>
+        ) : (
+          <OrbitProgress size="small" color={"#cc31b1"} />
+        )}
       </motion.form>
     </Form>
   );

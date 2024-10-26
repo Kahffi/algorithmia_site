@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Menggunakan Link dari react-router-dom
 import algo_logo from "../../assets/images/algorithmia_logo.png";
+import { UserContext } from "@/context/UserContext";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { state } = useContext(UserContext)!;
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -13,7 +15,7 @@ function Navbar() {
   };
 
   return (
-    <header className="bg-slate-50 p-4 flex justify-between items-center">
+    <header className=" p-4 flex justify-between items-center shadow-md">
       <div>
         <img src={algo_logo} alt="algorithmia's logo" className="w-12" />
       </div>
@@ -49,33 +51,40 @@ function Navbar() {
         } md:block absolute md:relative top-16 left-0 md:top-0 w-full md:w-auto bg-slate-50 md:bg-transparent z-50 md:z-auto p-4 md:p-0`}
       >
         <ul className="flex flex-col md:flex-row md:space-x-8">
-          <li onClick={closeMenu}>
-            <Link to="/" className="block py-2 md:py-0">
-              Home
-            </Link>
-          </li>
-          <li onClick={closeMenu}>
-            <Link to="/about" className="block py-2 md:py-0">
-              Profile
-            </Link>
-          </li>
-          <li onClick={closeMenu}>
-            <Link
-              to="/auth/signup"
-              className="block py-2 md:py-0 text-purple-700"
-            >
-              Daftar
-            </Link>{" "}
-            {/* Link ke halaman Daftar */}
-          </li>
-          <li onClick={closeMenu}>
-            <Link
-              to="/auth/signin"
-              className="block py-2 md:py-0 text-blue-500"
-            >
-              Masuk
-            </Link>{" "}
-          </li>
+          {state?._id !== "" ? (
+            <>
+              <li onClick={closeMenu}>
+                <Link to="/" className="block py-2 md:py-0">
+                  Home
+                </Link>
+              </li>
+              <li onClick={closeMenu}>
+                <Link to="/about" className="block py-2 md:py-0">
+                  Profile
+                </Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <li onClick={closeMenu}>
+                <Link
+                  to="/auth/signup"
+                  className="block py-2 md:py-0 text-purple-700"
+                >
+                  Daftar
+                </Link>{" "}
+                {/* Link ke halaman Daftar */}
+              </li>
+              <li onClick={closeMenu}>
+                <Link
+                  to="/auth/signin"
+                  className="block py-2 md:py-0 text-blue-500"
+                >
+                  Masuk
+                </Link>{" "}
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </header>

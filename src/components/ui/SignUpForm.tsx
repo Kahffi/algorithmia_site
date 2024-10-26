@@ -5,6 +5,7 @@ import type { TSignUpSchema } from "../../../Schema";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { OrbitProgress } from "react-loading-indicators";
 
 import {
   Form,
@@ -14,7 +15,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function SignUpForm() {
   const form = useForm<TSignUpSchema>({
@@ -27,9 +29,12 @@ export default function SignUpForm() {
       passwordVerif: "",
     },
   });
+  const [isPending, setIsPending] = useState(false);
+  const navigate = useNavigate();
 
   async function onSubmit(values: TSignUpSchema) {
     try {
+      setIsPending(true);
       const res = await fetch("https://algoritmia.vercel.app/user/signup", {
         headers: {
           "Content-Type": "application/json",
@@ -45,8 +50,7 @@ export default function SignUpForm() {
       const data = await res.json();
 
       if (data.status === 200) {
-        console.log("halo");
-        redirect("/");
+        navigate("/auth/signin");
       }
       if (data.status === 400) throw new Error("400");
     } catch (e) {
@@ -59,6 +63,8 @@ export default function SignUpForm() {
             "Nama pengguna ini sudah digunakan, silahkan coba nama pengguna lain",
         });
       }
+    } finally {
+      setIsPending(false);
     }
   }
 
@@ -66,13 +72,13 @@ export default function SignUpForm() {
     <Form {...form}>
       <motion.form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 max-w-80 w-full"
+        className="flex flex-col items-center space-y-6 max-w-80 w-full"
       >
         <FormField
           control={form.control}
           name="fullName"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>Nama Lengkap</FormLabel>
               <FormControl>
                 <Input placeholder="Nama Lengkap" {...field} />
@@ -86,7 +92,7 @@ export default function SignUpForm() {
           control={form.control}
           name="username"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>Nama Pengguna</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="Masukkan nama pengguna" />
@@ -100,7 +106,7 @@ export default function SignUpForm() {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>Kata Sandi</FormLabel>
               <FormControl>
                 <Input
@@ -117,7 +123,7 @@ export default function SignUpForm() {
           control={form.control}
           name="passwordVerif"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>Konfirmasi Kata Sandi</FormLabel>
               <FormControl>
                 <Input
@@ -134,7 +140,7 @@ export default function SignUpForm() {
           control={form.control}
           name="whatsapp"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormLabel>Nomor Whatsapp</FormLabel>
               <FormControl>
                 <Input
@@ -146,14 +152,18 @@ export default function SignUpForm() {
             </FormItem>
           )}
         />
-        <Button
-          className="w-full bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
-          variant={"default"}
-          size={"lg"}
-          type="submit"
-        >
-          Daftar
-        </Button>
+        {isPending ? (
+          <OrbitProgress size="small" color={"#cc31b1"} />
+        ) : (
+          <Button
+            className="w-full bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+            variant={"default"}
+            size={"lg"}
+            type="submit"
+          >
+            Daftar
+          </Button>
+        )}
       </motion.form>
     </Form>
   );
