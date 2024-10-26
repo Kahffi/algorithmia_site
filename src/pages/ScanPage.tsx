@@ -39,7 +39,6 @@ export default function ScanPage() {
         throw new Error(errorData.message);
       }
       const data = await res.json();
-      alert(data.message);
 
       if (data.status === 200) dispatch({ type: "ADD_POINT" });
       setSubmitStatus(data.status);
@@ -68,7 +67,6 @@ export default function ScanPage() {
 
   const qrSuccessCallback: QrcodeSuccessCallback = useCallback(
     (decodedText, result) => {
-      alert(decodedText);
       console.log(result);
       handleQRSubmit(decodedText);
     },
