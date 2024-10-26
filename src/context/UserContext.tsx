@@ -33,6 +33,10 @@ const userReducer = (state: TUser, action: TUserReducerAction) => {
       localStorage.removeItem("user");
       return null;
     case "ADD_POINT":
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ ...state, poin: state.poin + 10 })
+      );
       return { ...state, poin: state.poin + 10 };
     default:
       return { ...state };
