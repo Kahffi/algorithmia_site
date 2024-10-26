@@ -15,13 +15,19 @@ import {
   LucideX,
   LucideXOctagon,
 } from "lucide-react";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function ScanPage() {
   const [submitStatus, setSubmitStatus] = useState<number | null>(null);
   const navigate = useNavigate();
   const { state, dispatch } = useContext(UserContext)!;
+
+  useEffect(() => {
+    if (!state) {
+      navigate("/auth/signin");
+    }
+  }, [state]);
 
   async function handleQRSubmit(url: string) {
     try {
