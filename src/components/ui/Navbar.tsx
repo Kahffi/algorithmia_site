@@ -57,16 +57,16 @@ function Navbar() {
         <ul className="flex flex-col md:flex-row md:space-x-8">
           {state ? (
             <>
-              <li onClick={closeMenu}>
+              {/* <li onClick={closeMenu}>
                 <Link to="/" className="block py-2 md:py-0">
                   Home
                 </Link>
-              </li>
-              <li onClick={closeMenu}>
+              </li> */}
+              {/* <li onClick={closeMenu}>
                 <Link to="/about" className="block py-2 md:py-0">
                   Profile
                 </Link>
-              </li>
+              </li> */}
               <li onClick={logout}>
                 <Link to="/" className="block py-2 md:py-0 text-red-500">
                   Logout
