@@ -25,7 +25,6 @@ function App() {
     if (state) navigate("/home");
   }, [state, navigate]);
 
-  console.log(state, dispatch);
   useEffect(() => {
     if (!api) {
       return;
@@ -43,8 +42,7 @@ function App() {
       <Navbar />
 
       <main className="flex-1">
-        {/* Carousel Route (Home Page) */}
-
+        {/* Carousel Section */}
         <div className="flex justify-center">
           <Carousel
             setApi={setApi}
@@ -75,7 +73,50 @@ function App() {
             </div>
           </Carousel>
         </div>
+
+        {/* Boxes Section */}
+        <div className="flex flex-col items-center gap-6 p-6 mt-8">
+          {/* Box 1: Expedition */}
+          <div className="w-full max-w-lg p-4 bg-white rounded-lg border-4 border-purple-500 shadow-lg overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105">
+            <img src="./Carousel/carousel_7.jpeg" alt="Expedition" className="w-full h-40 object-cover rounded-t-lg" />
+            <div className="p-4">
+              <h3 className="text-2xl font-bold">Expedition</h3>
+              <p className="text-gray-700 mt-2">
+                The expedition aims to introduce the Mechatronics and AI program to the broader public, especially high school students.
+                It showcases the festival as a space for young tech catalysts to expand their innovations, inspiring high school students to engage and participate in future competitions.
+              </p>
+              <a href="https://www.instagram.com/p/DAsCCNMResP/" className="text-blue-500 font-semibold mt-4 inline-block">See More →</a>
+            </div>
+          </div>
+
+          {/* Box 2: Competition */}
+          <div className="w-full max-w-lg p-4 bg-white rounded-lg border-4 border-blue-300 shadow-lg overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105">
+            <img src="./Carousel/carousel_11.png" alt="Competition" className="w-full h-40 object-cover rounded-t-lg" />
+            <div className="p-4">
+              <h3 className="text-2xl font-bold">Competition</h3>
+              <p className="text-gray-700 mt-2">
+                Got some crazy AI ideas swirling in your head? Here's your shot to bring them to life!
+                The Competition gathers high school students like you to share innovative AI ideas through design and paper challenges.
+              </p>
+              <a href="#" className="text-red-500 font-semibold mt-4 inline-block">Closed </a>
+            </div>
+          </div>
+
+          {/* Box 3: Exhibition */}
+          <div className="w-full max-w-lg p-4 bg-white rounded-lg border-4 border-pink-300 shadow-lg overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105">
+            <img src="./Carousel/carousel_9.jpeg" alt="Exhibition" className="w-full h-40 object-cover rounded-t-lg" />
+            <div className="p-4">
+              <h3 className="text-2xl font-bold">Exhibition</h3>
+              <p className="text-gray-700 mt-2">
+                The Exhibition will showcase exciting tech products and projects created by MKB students. 
+                You’ll get to explore the cutting-edge tech that's being developed right now.
+              </p>
+              <a href="https://www.instagram.com/algorithmia.fest/" className="text-blue-500 font-semibold mt-4 inline-block">Attend →</a>
+            </div>
+          </div>
+        </div>
       </main>
+      
       <Footer />
     </div>
   );
