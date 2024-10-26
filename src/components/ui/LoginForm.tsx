@@ -62,10 +62,10 @@ function LoginForm() {
       }
       if ((e as Error).message.includes("400")) {
         form.setError("username", {
-          message: "Username or password wrong, please try again",
+          message: "Wrong username or password, please try again",
         });
         form.setError("password", {
-          message: "Username or password wrong, please try again",
+          message: "Wrong username or password, please try again",
         });
       }
     } finally {

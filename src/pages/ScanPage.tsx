@@ -20,6 +20,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function ScanPage() {
   const [submitStatus, setSubmitStatus] = useState<number | null>(null);
+  const [scanData, setScanData] = useState<string | null>(null);
   const navigate = useNavigate();
   const { state, dispatch } = useContext(UserContext)!;
 
@@ -29,42 +30,47 @@ export default function ScanPage() {
     }
   }, [state]);
 
-  async function handleQRSubmit(url: string) {
-    try {
-      // setIsPending(true);
-      const res = await fetch(url, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({ userId: state._id }),
-        mode: "cors",
-      });
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message);
-      }
-      const data = await res.json();
+  useEffect(() => {
+    if (!scanData) return;
+    async function handleQRSubmit(url: string) {
+      try {
+        // setIsPending(true);
+        const res = await fetch(url, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({ userId: state._id }),
+          mode: "cors",
+        });
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.message);
+        }
+        const data = await res.json();
 
-      if (data.status === 200) dispatch({ type: "ADD_POINT" });
-      setSubmitStatus(data.status);
-    } catch (e) {
-      if (!(e instanceof Error)) {
+        if (data.status === 200) dispatch({ type: "ADD_POINT" });
+        setSubmitStatus(data.status);
+      } catch (e) {
+        if (!(e instanceof Error)) {
+          console.error(e);
+        }
         console.error(e);
+        // if ((e as Error).message.includes("400")) {
+        //   form.setError("username", {
+        //     message: "Nama Pengguna atau Kata Sandi salah, silahkan coba lagi",
+        //   });
+        //   form.setError("password", {
+        //     message: "Nama Pengguna atau Kata Sandi salah, silahkan coba lagi",
+        //   });
+        // }
+      } finally {
+        // setIsPending(false);
       }
-      console.error(e);
-      // if ((e as Error).message.includes("400")) {
-      //   form.setError("username", {
-      //     message: "Nama Pengguna atau Kata Sandi salah, silahkan coba lagi",
-      //   });
-      //   form.setError("password", {
-      //     message: "Nama Pengguna atau Kata Sandi salah, silahkan coba lagi",
-      //   });
-      // }
-    } finally {
-      // setIsPending(false);
     }
-  }
+
+    handleQRSubmit(scanData);
+  }, [scanData]);
 
   const qrErrorCallback: QrcodeErrorCallback = useCallback((errMsg, err) => {
     console.error(errMsg);
@@ -72,9 +78,8 @@ export default function ScanPage() {
   }, []);
 
   const qrSuccessCallback: QrcodeSuccessCallback = useCallback(
-    (decodedText, result) => {
-      console.log(result);
-      handleQRSubmit(decodedText);
+    (decodedText) => {
+      setScanData(decodedText);
     },
     []
   );
@@ -99,16 +104,18 @@ export default function ScanPage() {
           </p>
         </div>
         <div className="w-full">
-          <QrCode
-            config={{
-              fps: 25,
-              qrbox: { width: 280, height: 280 },
-              disableFlip: true,
-            }}
-            errorCallback={qrErrorCallback}
-            successCallback={qrSuccessCallback}
-            // cameraId={cameraId}
-          />
+          {!scanData && (
+            <QrCode
+              config={{
+                fps: 25,
+                qrbox: { width: 280, height: 280 },
+                disableFlip: true,
+              }}
+              errorCallback={qrErrorCallback}
+              successCallback={qrSuccessCallback}
+              // cameraId={cameraId}
+            />
+          )}
         </div>
       </div>
 
