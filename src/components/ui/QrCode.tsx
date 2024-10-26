@@ -57,14 +57,17 @@ export default function QrCode({
   }, [successCallback, errorCallback, config, cameraId]);
 
   return (
-    <div>
+    <>
       {cameraId !== "" ? (
-        <div id="reader">
-          <h1 className="z-50">HALO WOI</h1>
-        </div>
+        <div
+          id="reader"
+          className="w-full rounded-md overflow-hidden shadow-md"
+        ></div>
       ) : (
-        <p>Izinkan kamera untuk menggunakan fitur ini</p>
+        <div className="flex justify-center items-center flex-1">
+          <p>Izinkan kamera untuk menggunakan fitur ini</p>
+        </div>
       )}
-    </div>
+    </>
   );
 }
