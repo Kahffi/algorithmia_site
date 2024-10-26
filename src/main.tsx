@@ -7,6 +7,7 @@ import AuthPage from "./pages/AuthPage.tsx";
 import Profile from "./pages/Profile.tsx";
 import { UserContextProvider } from "./context/UserContext.tsx";
 import HomePage from "./pages/HomePage.tsx";
+import ScanPage from "./pages/ScanPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -14,9 +15,10 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/home",
+    path: "home",
     element: <HomePage />,
   },
+  { path: "qr-scanner", element: <ScanPage /> },
   {
     path: "auth/:authType",
     element: <AuthPage />,
