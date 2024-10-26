@@ -1,9 +1,10 @@
 import Navbar from "@/components/ui/Navbar";
 import { TUser, UserContext } from "@/context/UserContext";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/ui/Footer";
 import LeaderBoard2 from "@/components/ui/LeaderBoard2";
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
   const { state } = useContext(UserContext)!;
@@ -45,9 +46,14 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-svh">
       <Navbar />
-      <main className="flex-1 p-3">
+      <main className="flex-1 flex flex-col items-center p-3">
         <div className="flex justify-center w-full">
           {sortedData && <LeaderBoard2 data={sortedData} />}
+        </div>
+        <div className="flex flex-col">
+          <Button>
+            <Link to="/qr-scanner">Scan Barcode</Link>
+          </Button>
         </div>
       </main>
       <Footer />

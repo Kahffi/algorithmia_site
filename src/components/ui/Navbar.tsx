@@ -1,17 +1,21 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom"; // Menggunakan Link dari react-router-dom
 import algo_logo from "../../assets/images/algorithmia_logo.png";
 import { UserContext } from "@/context/UserContext";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { state } = useContext(UserContext)!;
+  const { state, dispatch } = useContext(UserContext)!;
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
   const closeMenu = () => {
     setIsOpen(false);
+  };
+
+  const logout = () => {
+    dispatch({ type: "LOGOUT" });
   };
 
   return (
@@ -61,6 +65,11 @@ function Navbar() {
               <li onClick={closeMenu}>
                 <Link to="/about" className="block py-2 md:py-0">
                   Profile
+                </Link>
+              </li>
+              <li onClick={logout}>
+                <Link to="/" className="block py-2 md:py-0 text-red-500">
+                  Logout
                 </Link>
               </li>
             </>

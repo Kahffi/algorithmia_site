@@ -11,8 +11,8 @@ export type TUser = {
 };
 
 type TUserReducerAction = {
-  payload: unknown;
-  type: "LOGIN";
+  payload?: unknown;
+  type: "LOGIN" | "LOGOUT";
 };
 
 const userReducer = (state: TUser, action: TUserReducerAction) => {
@@ -20,6 +20,19 @@ const userReducer = (state: TUser, action: TUserReducerAction) => {
     case "LOGIN":
       console.log(state);
       return { ...(action.payload as TUser) };
+
+    case "LOGOUT":
+      return {
+        _id: "",
+        fullname: "",
+        username: "",
+        password: "",
+        whatsapp: "",
+        poin: 0,
+        __v: 0,
+      };
+    default:
+      return { ...state };
   }
 };
 export const UserContext = createContext<null | {
