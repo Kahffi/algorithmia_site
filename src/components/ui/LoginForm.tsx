@@ -112,7 +112,7 @@ function LoginForm() {
             size={"lg"}
             type="submit"
           >
-            Login
+            Sign In
           </Button>
         ) : (
           <OrbitProgress size="small" color={"#cc31b1"} />

@@ -80,7 +80,7 @@ function Navbar() {
                   to="/auth/signup"
                   className="block py-2 md:py-0 text-purple-700"
                 >
-                  Daftar
+                  Sign Up
                 </Link>{" "}
                 {/* Link ke halaman Daftar */}
               </li>
@@ -89,8 +89,8 @@ function Navbar() {
                   to="/auth/signin"
                   className="block py-2 md:py-0 text-blue-500"
                 >
-                  Masuk
-                </Link>{" "}
+                  Sign In
+                </Link>
               </li>
             </>
           )}
