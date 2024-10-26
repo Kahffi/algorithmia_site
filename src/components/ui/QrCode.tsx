@@ -24,7 +24,11 @@ export default function QrCode({
       .then((devices) => {
         console.log(devices);
         if (devices && devices.length) {
-          setCameraId(devices[0].id);
+          if (devices.length === 2) {
+            setCameraId(devices[1].id);
+          } else {
+            setCameraId(devices[0].id);
+          }
         }
       })
       .catch((err) => console.error(err));
