@@ -54,7 +54,8 @@ function LoginForm() {
         localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/home");
       }
-      console.log(data);
+      console.log(res, "fetch response");
+      console.log(data, "json'ed data");
       if (data.status === 400) throw new Error("400");
     } catch (e) {
       if (!(e instanceof Error)) {

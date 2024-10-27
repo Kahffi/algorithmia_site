@@ -16,6 +16,7 @@ import {
   LucideXOctagon,
 } from "lucide-react";
 import { useCallback, useContext, useEffect, useState } from "react";
+import { OrbitProgress } from "react-loading-indicators";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function ScanPage() {
@@ -23,6 +24,7 @@ export default function ScanPage() {
   const [scanData, setScanData] = useState<string | null>(null);
   const navigate = useNavigate();
   const { state, dispatch } = useContext(UserContext)!;
+  const [isPending, setIsPending] = useState(false);
 
   useEffect(() => {
     if (!state) {
@@ -34,7 +36,7 @@ export default function ScanPage() {
     if (!scanData) return;
     async function handleQRSubmit(url: string) {
       try {
-        // setIsPending(true);
+        setIsPending(true);
         const res = await fetch(url, {
           headers: {
             "Content-Type": "application/json",
@@ -65,7 +67,7 @@ export default function ScanPage() {
         //   });
         // }
       } finally {
-        // setIsPending(false);
+        setIsPending(false);
       }
     }
 
@@ -120,52 +122,56 @@ export default function ScanPage() {
       </div>
 
       {/* overlay */}
-      {submitStatus && (
+      {scanData && (
         <div className="w-full h-full absolute top-0 flex justify-center items-center bg-pink-100/50 backdrop-blur-sm px-3 pb-10">
-          <Card className="max-w-[320px] flex flex-col items-center">
-            <CardHeader>
-              <CardTitle className="text-lg text-center font-medium">
+          {isPending ? (
+            <OrbitProgress size="small" color={"#cc31b1"} />
+          ) : (
+            <Card className="max-w-[320px] flex flex-col items-center">
+              <CardHeader>
+                <CardTitle className="text-lg text-center font-medium">
+                  {submitStatus === 200 ? (
+                    <>
+                      <LucideCheck className="inline mr-2" color="green" />
+                      Points Has Been Successfully Added
+                    </>
+                  ) : submitStatus === 400 ? (
+                    <>
+                      <LucideXOctagon className="inline mr-2" color="red" />
+                      You Have Scanned this QR Code Before
+                    </>
+                  ) : (
+                    "Unknown Error Occured"
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm text-center">
                 {submitStatus === 200 ? (
                   <>
-                    <LucideCheck className="inline mr-2" color="green" />
-                    Points Has Been Successfully Added
+                    10 points have been added to your account.
+                    <br />
+                    Collect as many points as possible and win exciting prizes!
                   </>
                 ) : submitStatus === 400 ? (
                   <>
-                    <LucideXOctagon className="inline mr-2" color="red" />
-                    You Have Scanned this QR Code Before
+                    You have earned points from this booth. Please visit and
+                    scan the QR codes at booths you haven't visited yet to earn
+                    additional points.
                   </>
                 ) : (
-                  "Unknown Error Occured"
+                  "Unknown Error Occured. Please try again later"
                 )}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-sm text-center">
-              {submitStatus === 200 ? (
-                <>
-                  10 points have been added to your account.
-                  <br />
-                  Collect as many points as possible and win exciting prizes!
-                </>
-              ) : submitStatus === 400 ? (
-                <>
-                  You have earned points from this booth. Please visit and scan
-                  the QR codes at booths you haven't visited yet to earn
-                  additional points.
-                </>
-              ) : (
-                "Unknown Error Occured. Please try again later"
-              )}
-            </CardContent>
-            <CardFooter className="w-full">
-              <Button
-                className="w-full bg-blue-500 hover:bg-blue-600"
-                onClick={() => navigate("/home")}
-              >
-                Back to Home Page
-              </Button>
-            </CardFooter>
-          </Card>
+              </CardContent>
+              <CardFooter className="w-full">
+                <Button
+                  className="w-full bg-blue-500 hover:bg-blue-600"
+                  onClick={() => navigate("/home")}
+                >
+                  Back to Home Page
+                </Button>
+              </CardFooter>
+            </Card>
+          )}
         </div>
       )}
     </div>

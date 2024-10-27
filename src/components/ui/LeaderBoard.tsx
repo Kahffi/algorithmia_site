@@ -34,7 +34,7 @@ export default function LeaderBoard() {
 
   const sortedData = useMemo(() => {
     if (!data) return;
-    return data.sort((a, b) => b.poin - a.poin).slice(0, 5);
+    return data.sort((a, b) => b.poin - a.poin);
   }, [data]);
 
   const chartConfig = useMemo(() => {
@@ -54,7 +54,10 @@ export default function LeaderBoard() {
     <>
       {sortedData && (
         <>
-          <ChartContainer config={chartConfig!}>
+          <ChartContainer
+            className="min-h-svh w-full overflow-x-auto"
+            config={chartConfig!}
+          >
             <BarChart
               accessibilityLayer
               data={sortedData}
@@ -66,19 +69,16 @@ export default function LeaderBoard() {
               <YAxis
                 dataKey="username"
                 type="category"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-                tickFormatter={(value) =>
-                  chartConfig![value as keyof typeof chartConfig]?.label
-                }
+                // tickFormatter={(value) =>
+                //   chartConfig![value as keyof typeof chartConfig]?.label
+                // }
               />
               <XAxis dataKey="poin" type="number" />
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <Bar dataKey="poin" layout="vertical" radius={5} />
+              <Bar dataKey="poin" layout="vertical" radius={5} color="blue" />
             </BarChart>
           </ChartContainer>
         </>

@@ -8,6 +8,7 @@ import Profile from "./pages/Profile.tsx";
 import { UserContextProvider } from "./context/UserContext.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import ScanPage from "./pages/ScanPage.tsx";
+import AdminPage from "./pages/AdminPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "about",
     element: <Profile />,
+  },
+  {
+    path: "admin-algorithmia-24",
+    element: <AdminPage />,
   },
 ]);
 
